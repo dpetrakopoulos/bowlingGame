@@ -33,4 +33,8 @@ class Frame {
         remainingFrames--;
     }
 
+    boolean isFrame() {
+        return rollsPerFrame == 2;
+    }
+
 }

@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Game {
-    private final Bonus bonus = new Bonus(this);
-    private final Frame frame = new Frame();
+    private final Frame frame;
     private List<Integer> pins;
+    private String givenBonus;
 
     Game(){
         this.pins = new ArrayList<>();
+        this.frame = new Frame();
     }
 
     String getBonus() {
-        return bonus.getBonus();
+        return givenBonus;
     }
 
     int remainingFrames(){
@@ -30,7 +31,7 @@ class Game {
 
         frame.setRollsPerFrame(frame.getRollsPerFrame() + 1);
 
-        bonus.giveBonuses(numberOfPinsDown);
+        giveBonuses(numberOfPinsDown);
     }
 
     private boolean checkIfGameIsOver() {
@@ -44,10 +45,6 @@ class Game {
     void adjustGameSettings() {
         frame.reduceNumberOfFrames();
         frame.resetRollsPerFrame();
-    }
-
-    boolean isFrame() {
-        return frame.getRollsPerFrame() == 2;
     }
 
     boolean allPinsDownOnTwoRolls() {
@@ -70,6 +67,23 @@ class Game {
         return this.pins.stream().mapToInt(Integer::intValue).sum();
     }
 
+    void giveBonuses(int numberOfPinsDown) {
+        if (allPinsDownOnFirstRoll(numberOfPinsDown)) {
+            givenBonus =  Bonus.STRIKE.toString();
+        }
+
+        if (frame.isFrame()) {
+            if (allPinsDownOnTwoRolls()) {
+                givenBonus = Bonus.SPARE.toString();
+            }
+            adjustGameSettings();
+        }
+    }
+
     static class InvalidPinsArgumentException extends RuntimeException{
+    }
+
+    enum Bonus{
+        STRIKE, SPARE
     }
 }

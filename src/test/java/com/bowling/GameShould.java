@@ -88,13 +88,13 @@ public class GameShould {
     public void giveASpareBonusWhenAllTenPinsDownInTwoRolls(){
         game.roll(5);
         game.roll(5);
-        assertThat(game.getBonus()).isEqualTo("spare");
+        assertThat(game.getBonus()).isEqualToIgnoringCase("spare");
     }
 
     @Test
     public void giveAStrikeBonusWhenAllTenPinsDownOnFirstRoll(){
         game.roll(10);
-        assertThat(game.getBonus()).isEqualTo("strike");
+        assertThat(game.getBonus()).isEqualToIgnoringCase("strike");
     }
 
 }
