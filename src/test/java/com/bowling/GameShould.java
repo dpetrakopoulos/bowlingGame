@@ -5,12 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-/**
- * Created by dpetrakopoulos on 16/1/2018.
- */
-
 /*Bowling Rules
 
   The game consists of 10 frames. In each frame the player has two rolls to knock down 10 pins.

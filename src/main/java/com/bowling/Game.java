@@ -3,31 +3,24 @@ package com.bowling;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dpetrakopoulos on 16/1/2018.
- */
-public class Game {
-
-    private static final int NEW_GAME_FRAMES = 10;
+class Game {
     private final Bonus bonus = new Bonus(this);
-    private int remainingFrames;
-    private int rollsPerFrame;
+    private final Frame frame = new Frame();
     private List<Integer> pins;
 
-    public Game(){
-        this.remainingFrames = NEW_GAME_FRAMES;
+    Game(){
         this.pins = new ArrayList<>();
     }
 
-    public String getBonus() {
+    String getBonus() {
         return bonus.getBonus();
     }
 
-    public int remainingFrames(){
-        return this.remainingFrames;
+    int remainingFrames(){
+        return frame.remainingFrames();
     }
 
-    public void roll(int numberOfPinsDown) throws InvalidPinsArgumentException{
+    void roll(int numberOfPinsDown) throws InvalidPinsArgumentException{
         if(pinsIsInvalid(numberOfPinsDown)){
             throw new InvalidPinsArgumentException();
         }
@@ -35,7 +28,7 @@ public class Game {
         if (checkIfGameIsOver()) return;
         pins.add(numberOfPinsDown);
 
-        rollsPerFrame++;
+        frame.setRollsPerFrame(frame.getRollsPerFrame() + 1);
 
         bonus.giveBonuses(numberOfPinsDown);
     }
@@ -48,29 +41,21 @@ public class Game {
         return false;
     }
 
-    protected void adjustGameSettings() {
-        reduceNumberOfFrames();
-        resetRollsPerFrame();
+    void adjustGameSettings() {
+        frame.reduceNumberOfFrames();
+        frame.resetRollsPerFrame();
     }
 
-    protected boolean isFrame() {
-        return rollsPerFrame == 2;
+    boolean isFrame() {
+        return frame.getRollsPerFrame() == 2;
     }
 
-    protected boolean allPinsDownOnTwoRolls() {
+    boolean allPinsDownOnTwoRolls() {
         return score() == 10;
     }
 
-    private void resetRollsPerFrame() {
-        rollsPerFrame = 0;
-    }
-
-    private void reduceNumberOfFrames() {
-        remainingFrames--;
-    }
-
-    protected boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
-        return rollsPerFrame == 1 && numberOfPinsDown == 10;
+    boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
+        return frame.getRollsPerFrame() == 1 && numberOfPinsDown == 10;
     }
 
     private boolean pinsIsInvalid(int numberOfPinsDown) {
@@ -78,13 +63,13 @@ public class Game {
     }
 
     private boolean gameIsOver() {
-        return remainingFrames == 0;
+        return frame.getRemainingFrames() == 0;
     }
 
-    public int score() {
+    int score() {
         return this.pins.stream().mapToInt(Integer::intValue).sum();
     }
 
-    public static class InvalidPinsArgumentException extends RuntimeException{
+    static class InvalidPinsArgumentException extends RuntimeException{
     }
 }
