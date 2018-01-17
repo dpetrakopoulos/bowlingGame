@@ -25,15 +25,23 @@ import org.junit.Test;
 
 public class GameShould {
     private Game game;
+    private Frame frame;
 
     @Before
     public void setUp(){
         game = new Game();
+        frame = new Frame();
     }
 
     @Test
     public void haveTenFramesOnStart(){
         assertThat(game.remainingFrames()).isEqualTo(10);
+    }
+
+    @Test
+    public void haveTwoRollsPerFrame(){
+        frame.setRollsPerFrame(2);
+        assertThat(frame.isFrame()).isEqualTo(true);
     }
 
     @Test
@@ -66,7 +74,6 @@ public class GameShould {
 
     @Test
     public void finishOnTwentiethRoll() {
-
         for (int i=0; i< 21; i++) {
             game.roll(1);
         }

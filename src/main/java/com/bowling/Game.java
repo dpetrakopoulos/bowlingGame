@@ -9,8 +9,8 @@ class Game {
     private String givenBonus;
 
     Game(){
-        this.pins = new ArrayList<>();
-        this.frame = new Frame();
+        pins = new ArrayList<>();
+        frame = new Frame();
     }
 
     String getBonus() {
@@ -18,7 +18,7 @@ class Game {
     }
 
     int remainingFrames(){
-        return frame.remainingFrames();
+        return frame.getRemainingFrames();
     }
 
     void roll(int numberOfPinsDown) throws InvalidPinsArgumentException{
@@ -42,16 +42,16 @@ class Game {
         return false;
     }
 
-    void adjustGameSettings() {
+    private void adjustGameSettings() {
         frame.reduceNumberOfFrames();
         frame.resetRollsPerFrame();
     }
 
-    boolean allPinsDownOnTwoRolls() {
+    private boolean allPinsDownOnTwoRolls() {
         return score() == 10;
     }
 
-    boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
+    private boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
         return frame.getRollsPerFrame() == 1 && numberOfPinsDown == 10;
     }
 
@@ -64,10 +64,10 @@ class Game {
     }
 
     int score() {
-        return this.pins.stream().mapToInt(Integer::intValue).sum();
+        return pins.stream().mapToInt(Integer::intValue).sum();
     }
 
-    void giveBonuses(int numberOfPinsDown) {
+    private void giveBonuses(int numberOfPinsDown) {
         if (allPinsDownOnFirstRoll(numberOfPinsDown)) {
             givenBonus =  Bonus.STRIKE.toString();
         }

@@ -6,11 +6,7 @@ class Frame {
     private int rollsPerFrame;
 
     Frame() {
-        this.remainingFrames = NEW_GAME_FRAMES;
-    }
-
-    int getRemainingFrames() {
-        return remainingFrames;
+        remainingFrames = NEW_GAME_FRAMES;
     }
 
     int getRollsPerFrame() {
@@ -21,8 +17,8 @@ class Frame {
         this.rollsPerFrame = rollsPerFrame;
     }
 
-    int remainingFrames() {
-        return this.remainingFrames;
+    int getRemainingFrames() {
+        return remainingFrames;
     }
 
     void resetRollsPerFrame() {
