@@ -34,7 +34,7 @@ class Game {
         giveBonuses(numberOfPinsDown);
     }
 
-    private boolean checkIfGameIsOver() {
+    boolean checkIfGameIsOver() {
         if(gameIsOver()){
             score();
             return true;

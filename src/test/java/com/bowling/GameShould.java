@@ -45,6 +45,11 @@ public class GameShould {
     }
 
     @Test
+    public void haveScoreEqualToZeroOnStart(){
+        assertThat(game.score()).isEqualTo(0);
+    }
+
+    @Test
     public void reduceFrameSizeWhenPlayerPlays(){
         game.roll(0);
         game.roll(3);
@@ -77,7 +82,7 @@ public class GameShould {
         for (int i=0; i< 21; i++) {
             game.roll(1);
         }
-
+        assertThat(game.checkIfGameIsOver()).isEqualTo(true);
         assertThat(game.score()).isEqualTo(20);
     }
 
