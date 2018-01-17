@@ -29,8 +29,8 @@ public class GameShould {
 
     @Before
     public void setUp(){
-        game = new Game();
-        frame = new Frame();
+        game = Game.Make();
+        frame = Frame.Make();
     }
 
     @Test

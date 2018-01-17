@@ -5,7 +5,11 @@ class Frame {
     private int remainingFrames;
     private int rollsPerFrame;
 
-    Frame() {
+    public static Frame Make(){
+        return new Frame();
+    }
+
+    private Frame() {
         remainingFrames = NEW_GAME_FRAMES;
     }
 

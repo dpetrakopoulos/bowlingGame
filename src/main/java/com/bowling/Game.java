@@ -8,9 +8,13 @@ class Game {
     private List<Integer> pins;
     private String givenBonus;
 
-    Game(){
+    public static Game Make(){
+        return new Game();
+    }
+
+    private Game(){
         pins = new ArrayList<>();
-        frame = new Frame();
+        frame = Frame.Make();
     }
 
     String getBonus() {
