@@ -9,10 +9,10 @@ import java.util.List;
 public class Game {
 
     private static final int NEW_GAME_FRAMES = 10;
+    private final Bonus bonus = new Bonus(this);
     private int remainingFrames;
     private int rollsPerFrame;
     private List<Integer> pins;
-    private String bonus;
 
     public Game(){
         this.remainingFrames = NEW_GAME_FRAMES;
@@ -20,7 +20,7 @@ public class Game {
     }
 
     public String getBonus() {
-        return bonus;
+        return bonus.getBonus();
     }
 
     public int remainingFrames(){
@@ -37,7 +37,7 @@ public class Game {
 
         rollsPerFrame++;
 
-        giveBonuses(numberOfPinsDown);
+        bonus.giveBonuses(numberOfPinsDown);
     }
 
     private boolean checkIfGameIsOver() {
@@ -48,29 +48,16 @@ public class Game {
         return false;
     }
 
-    private void giveBonuses(int numberOfPinsDown) {
-        if(allPinsDownOnFirstRoll(numberOfPinsDown)){
-            bonus = "strike";
-        }
-
-        if(isFrame()) {
-            if(allPinsDownOnTwoRolls()){
-                bonus = "spare";
-            }
-            adjustGameSettings();
-        }
-    }
-
-    private void adjustGameSettings() {
+    protected void adjustGameSettings() {
         reduceNumberOfFrames();
         resetRollsPerFrame();
     }
 
-    private boolean isFrame() {
+    protected boolean isFrame() {
         return rollsPerFrame == 2;
     }
 
-    private boolean allPinsDownOnTwoRolls() {
+    protected boolean allPinsDownOnTwoRolls() {
         return score() == 10;
     }
 
@@ -82,7 +69,7 @@ public class Game {
         remainingFrames--;
     }
 
-    private boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
+    protected boolean allPinsDownOnFirstRoll(int numberOfPinsDown) {
         return rollsPerFrame == 1 && numberOfPinsDown == 10;
     }
 
