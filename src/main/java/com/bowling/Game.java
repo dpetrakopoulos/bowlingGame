@@ -11,17 +11,16 @@ public class Game {
     private static final int NEW_GAME_FRAMES = 10;
     private int remainingFrames;
     private int rollsPerFrame;
-    private int pinsDownPerFrame;
     private List<Integer> pins;
     private String bonus;
-
-    public String getBonus() {
-        return bonus;
-    }
 
     public Game(){
         this.remainingFrames = NEW_GAME_FRAMES;
         this.pins = new ArrayList<>();
+    }
+
+    public String getBonus() {
+        return bonus;
     }
 
     public int remainingFrames(){
@@ -33,25 +32,42 @@ public class Game {
             throw new InvalidPinsArgumentException();
         }
 
-        if(gameIsOver()){
-            score();
-            return;
-        }
+        if (checkIfGameIsOver()) return;
         pins.add(numberOfPinsDown);
 
         rollsPerFrame++;
 
+        giveBonuses(numberOfPinsDown);
+    }
+
+    private boolean checkIfGameIsOver() {
+        if(gameIsOver()){
+            score();
+            return true;
+        }
+        return false;
+    }
+
+    private void giveBonuses(int numberOfPinsDown) {
         if(allPinsDownOnFirstRoll(numberOfPinsDown)){
             bonus = "strike";
         }
 
-        if(rollsPerFrame == 2) {
+        if(isFrame()) {
             if(allPinsDownOnTwoRolls()){
                 bonus = "spare";
             }
-            reduceNumberOfFrames();
-            resetRollsPerFrame();
+            adjustGameSettings();
         }
+    }
+
+    private void adjustGameSettings() {
+        reduceNumberOfFrames();
+        resetRollsPerFrame();
+    }
+
+    private boolean isFrame() {
+        return rollsPerFrame == 2;
     }
 
     private boolean allPinsDownOnTwoRolls() {
